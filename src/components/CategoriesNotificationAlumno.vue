@@ -5,7 +5,7 @@
     viewNotificationBase  -->
 <template>
 	<div class="categories-notifications">
-		 <!-- Tabs: Mis/ Todas -->
+		 <!-- Tabs: Mis/ Todas las categorias de notificaciónes-->
 		<div class="tabs">
 			<button :class="{active: showMyNotifications}" 
 			        @click="showMyNotifications=true; updateURL()" >
@@ -23,7 +23,7 @@
 				 <button @click="sendMesagge">Enviar</button>
 			</div>
 
-			<!-- Listado de Not -->
+			<!-- Subcomponente: Prop: Objetivo Listar las lecturas de Notificaciónes-->
 			 <LectureNotifications	
 			   :notifications="filteredNotifications"
 			    @togle-read="toogleRead"
@@ -74,6 +74,10 @@
 
 	     // Recargar reactivamente si cambia el store (observer de JS)
 	     watch(() storeNotify.notifications, () => { } {deep: true});
+
+	     /*Crear logica para Clasificar las  Notificaciones del Alumno*/
+
+	     // Pensar el como?  -> El algoritmo de Categorias(clasificiación) de Notificaciones Alumno(Design) 
 		
 </script>
   <style scoped>

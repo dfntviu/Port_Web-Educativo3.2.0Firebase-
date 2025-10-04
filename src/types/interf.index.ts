@@ -4,15 +4,27 @@
   	 description?: string;  //descripcion opcional
   	 autor: Profile;  //autor que subió el material
   }
+    /*26/10/25*/
+   interface MaterialRenovado {
+     uid: string;    
+     titulo: string;  
+     // news
+     description?: string;   
+     archivoURL?: string | null;
+     fechaOrigen?: Date| null
+      // end_news
+     autor: Profile;  
+  }
   
   interface User {
   	 uid: string;
+     username: string; //new a condition
   	 name: string
   	 email: string
   	 role?: "alumno" | "profesor" | "admin";
-     // role?: string;  error
+      // role?: string;  error
   }
-  // Profile del Estudiante/Profesor se extiende dese User
+    // Profile del Estudiante/Profesor se extiende dese User
   interface Profile extends User {
       uid_prof: string;
      autorRole: "alumno" | "profesor";
@@ -25,7 +37,7 @@
   	 timestamp: number;  //unix timestamp
   	 read: boolean;
   }
-      // Relación entre el Alumno y un material (aprobación, moderación, etc.)
+    // Relación entre el Alumno y un material (aprobación, moderación, etc.)
    interface Moderation {
      id_material: string; //id del material relacionado
      id_autor: string;   //id del autor(perfil del Alumno)
@@ -35,22 +47,13 @@
         //correction-2 en Fecha
        // snapshot:  'adm_materials' | User.value='alumno';
   }
-  // #nueva agregada(25/Sep/25)
+    // # Nueva agregada(25/Sep/25)
   interface Comentario {
     id: string;
     mensaje: string;
      destacado: boolean;
      fecha: Date;
   }
-       // #Agregada recientemente, para trabajar entre el conre de aprobacion y relacion engtre amnas entidades(alumno-materiales) (error x)
-
-    /*interface Profile {
-  	   uid_prof: string;
-  	   name: string;
-  	   email: string;
-  	   role?: string;
-  	   autor: User.value = 'alumno' | 'professor';  [correction-1]
-    }*/
 
    interface Permissions {
      puedeSubirMaterialEducAlumno: boolean;
@@ -63,3 +66,11 @@
      VistaBienvenidaProffesor: boolean;
      VistaBienvenidaAlumno: boolean;
    }
+       // # Agregada recientemente, para trabajar entre el conre de aprobacion y relacion engtre amnas entidades(alumno-materiales, sust. por herencia de la Ln.28)
+    /*interface Profile {
+  	   uid_prof: string;
+  	   name: string;
+  	   email: string;
+  	   role?: string;
+  	   autor: User.value = 'alumno' | 'professor';  [correction-1]
+    }*/

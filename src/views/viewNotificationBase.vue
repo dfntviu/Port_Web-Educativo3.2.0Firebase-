@@ -1,97 +1,122 @@
-<!-- Código Base(Vta-Base): Invoca a los 2 componentes para
-   obtener la funcionalidad total, se distribuyeron en 2 componentes
-   con el proposito de organización, claridad pero sobre todo de division
-   de responsabilidades por su criterio -->
 <template>
-	<div class="base-containter">
-		<h2>Panel de Notificaciónes</h2>
-		    <CategoriesNotification v-if="role === 'profesor'" class='categories-notifications'>
-		  	<LectureNotifications v-else :notificaciones="allNotifications"  
-		  	  @toogle-read="toggleRead" class="lecture-notifications" >
-		  <!-- </div> -->
+	<div class="base-container">
+		 <!-- Panel de Alumnos -->
+		<div v-if="role === 'alumno'" class="container-component">
+			<h2>Panel de Notificaciónes de Alumnos</h2>
+			  <CategoriesNotifications  class='categories-notifications' />
+			  <LectureNotificationsAlumno />
+			  <!-- Panel de Profesores -->
+		</div>
+		<div v-if="role === 'profesor'"  class="container-component">
+			<h2>Panel de Notificaciónes Profesor</h2>
+			 <CategoriesNotificationProffesor class='categories-notifications' />
+			 <LectureNotificationsProfessor />
+		</div>
+		<!-- Rol Indefinido -->
+		<div v-else>
+			<p>Error No Defininido</p>
+		</div>
 	</div>
 </template>
 
-<script setup lang="ts">
-	import {ref} from 'vue';
-    import {  useNotificationStore } from '@/stores/useNotificationStore.ts';
-    import { CategoriesNotifications } from '@/components/CategoriesNotifications.vue';
-    import {    LectureNotifications } from '@/components/LectureNotifications.vue';
+<script setup lang="ts" >
+	/** Cambios Aplicacos: 03/Oct/2025 **/
+	import {onMounted} from 'vue';
+	// librerias del store -> Acceso a Firebase
+	import {useAuthStore} from '@/stores/authStore';
+	import {useNotificationStore} from '@/stores/useNotificationStore.ts';
+	// librerias propias
+	import {CategoriesNotifications} from '@/components/CategoriesNotifications.vue';
+	import {CategoriesNotificationProffesor} from '@/components/CategoriesNotifications.vue';
+	import {LectureNotificationsAlumno} from '@/components/LectureNotificationsAlumno.vue';
+	import {LectureNotificationsProfessor} from '@/components/LectureNotificationsProfessor.vue';
 
+	 /* Estado base -> invocacion*/
+	const  authStore = useAuthStore();
 	const store_base = useNotificationStore();
 
-	 // # Definir el rol dinamicamente
-	const role = ref<'profesor' | 'alumno'>('profesor');
+	/* Roles de lo valores reales(desde auth)*/
+	const role = authStore.role;
+	const userId = authStore.user?.uid ?? '';
+	   
+	 /* Inincializarlo en la vista Principal*/
+    onMounted(async ()=> {
+       if(role && userId){
+	     try{	
+			 await store_base.fetchNotificationByRole(role,userId);
+	     } catch(error){ // Informamos en devtools
+				console.error("Error al cargar las notificaciónes, segun el tipo de Rol: ",error);
+	     }
+       } //#end_if 
+    });
 
-	const allNotifications = ref(store_base.notifications);
+	   /*  habilitar por testeo rapido (evitar llenado de campos)
+	      const role = ref<'alumno' || 'profesor'>('pred');
+	      const userId = ref('user_005');   incializar un valor para no rellenar campos*/
 
-	     // Alternar la lectura de las Notificaciones
-	    const toggleRead = async (notificationId: string, read: boolean) =>{
-	  	  await store_base.readingType(notificationId,read);
-	    }
-	
 </script>
 
-<style scoped>
-	 /* BaseNotification.vue */
-	div {
-	  font-family: Arial, sans-serif;
-	  padding: 1rem;
-	}
+ <style scoped>
 
-	h2 {
-	  font-size: 1.2rem;
-	  margin-bottom: 0.5rem;
-	}
+ 	.base-container{
+ 		display: flex;
+ 		flex-direction: column;
+ 		gap: 2rem;
+ 		padding: 1.5rem;
+ 		background: #f5f0e6;
+ 		min-width: 100vh;
+ 	}
+ 	
+ 	.container-component{
+ 		background: #ffffff;
+ 		border-radius: 12px;
+ 		padding: 1.2rem;
+ 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+ 		 transition: transform 0.3s ease;
+ 	}
+ 	
+ 	.container-component: hover{
+ 		transform: translateY(-4px);
+ 	}
 
-	/* Contenedor flexible para los componentes hijos */
-	.categories-notifications,
-	.lecture-notifications {
-	  margin-top: 1rem;
-	}
+ 	h2{
+ 		color: #5d4037;
+ 		font-size: 1.3rem;
+ 		font-weight: bold;
+ 		margin-bottom: 1rem;
+ 	}
 
-	/* Estilos mínimos para listas de notificaciones */
-	ul {
-	  list-style: none;
-	  padding: 0;
-	  margin: 0;
-	}
+ 	.categories-notifications{
+ 		margin-bottom: 1rem;
+ 	}
 
-	li {
-	  display: flex;
-	  justify-content: space-between;
-	  padding: 0.5rem;
-	  border-bottom: 1px solid #eee;
-	}
+ 	/*  Animacion suave */
+ 	 .fade-in {
+ 	 	opacity: 0;
+ 	 	animation: fade-in 0.8s ease forwards;
+ 	 }
 
-	 /* Botones básicos */
-	button {
-	  padding: 0.25rem 0.5rem;
-	  cursor: pointer;
-	  border: 1px solid #ccc;
-	  border-radius: 4px;
-	  background: #f9f9f9;
-	}
+ 	 @keyframes fade-in{
+ 	 	from { opacity:0; transform: translateY(10px); }
+ 	 	to { opacity: 1; transform: translateY(0);}
+ 	 }
+ </style>
+	  <!-- /** Mapeo de acciones **/ -->
+	 <!-- /*const actionsMap: Record<number, ()=>Promise<void>> = {
+		1:() => store_base.readNotifications(computed(()=> '')),
+		2:() => store_base.recentNotifications(computed(()=> '')),
+		4:() => store_base.guardarNotificacion(indNotify),
+		5:() => store_base.eliminarNotificacion(id),
+		6:() => store_base.prepararEdicion(notificacion),
+	};  */
 
-	button:hover {
-	  background: #e0e0e0;
-	}
-
-    /* Lectura básica */
-	span.read {
-	  opacity: 0.7;
-	  text-decoration: line-through;
-	}
-	/*Cambiarlo con respecto aumente los margenes izquiero y de arriba, y efectue una especie de transicion por 6 segs (x)
-	 .base-containter{
-		margin-top: 2rem;
-		margin-let: 2rem;
-		background-color: cyan;
-	}*/
-
-	/*.categories-notifications{
-		background-origin: padding-box;
-		padding: auto;
-		border: 3px;
-	} */	
-</style>
+	/**
+	 *   Ejecuta la acción basada en la opcion
+	 const ejecucion_accion = async(opcion: number) =>{
+	 	const accion = actionsMap[opcion];
+	 	 if (accion) {
+	 	 	 await accion();
+	 	 }else{
+	 	 	console.error("Accion definida para la opcion", opcion);
+	 	 }
+	 } **/ -->

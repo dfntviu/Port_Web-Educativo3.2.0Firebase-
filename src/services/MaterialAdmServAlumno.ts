@@ -3,7 +3,10 @@ import { initializateFireabaseStg } from '@/config/initializateFirebase.js';
   import {Material} from '@/types/interf.index.js';
 
 const { db } = initializateFireabaseStg();
+ /* Nuevas*/
+          /* const currentPage = ref(0); const allItems = ref([0]); const pageSize = 20; const nextPageToken = ref(false); */
 
+    /* El Viernes pasado*/
   export class MaterialDeployService {
     static collectionName = 'materials';
 
@@ -71,7 +74,43 @@ const { db } = initializateFireabaseStg();
              console.error('[MaterialDeployService]: Error al borrar el material', error);
               throw error;
         }
-
     }
+    // -> [trasladado 29/09/25]
+    /*  Cambiarlo traer logica de Firbease, revisar muy bien el componente origen
+       que esta como action(de pinia) en la version de prototipado */
+       
+      static async siguientePagina(next = true){
+        if (next) {
+          if ((currentPage+1)* pageSize < allItems.value.length){
+             currentPage.value++;
+          }else{
+              if (currentPage.value>0) {  //13 -12 //12 11 //9 -8
+                currentPage.value--;
+              }
+          }
+        }  
+          // Nueva logica: Devuelve el rango entre materiales del primero al siguiente
+          const start = currentPage.value * pageSize;
+          const   end = start + pageSize;
 
+            return allItems.value.slice(start,next);
+         // return {next,currentPage,pageSize}
+      },
+      static async cargarMaterialesPaginados(){
+        try{
+           const materiales = this.getAllMaterialsEduc();
+            allItems.value = materiales; 
+            nextPageToken.value = materiales.length > pageSize;
+
+             return {
+                materiales: allItems.value.slice(0, pageSize),
+                total: allItems.value.length,
+                hasNext: nextPageToken.value,
+             };
+        }catch(error){
+            console.error('[Desp. Servicio de Materiales Edu]: Error al cargar la Paginación de Materiales');
+             throw error;
+        }
+        // return {materiales,allItems,nextPageToken}
+      }  
   }

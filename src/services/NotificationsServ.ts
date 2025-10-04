@@ -7,7 +7,7 @@ const { db } = initializateFireabaseStg();
   export class NotificationService {
       static collectionName = 'notifications';
         // Notificar al Alumn
-      static async notifyAlumno(alumnoId: string, mensaje: steing){
+      static async notifyAlumno(alumnoId: string, mensaje: string){
            try{
               const newDocRef =  doc(collection(db, this.collectionName));
               const notification: Notification = {

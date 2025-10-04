@@ -1,6 +1,10 @@
 <!-- Componente Administracion-de_Alumnos: 
     Proposito: Tener un componente completo en UI/UX, Lógica, reactivo
-    y eficiente mas que la vista por si se necesesta utilizar muchas veces -->
+    y eficiente mas que la vista por si se necesesta utilizar muchas veces 
+   para la busqueda de alumnos, teninendo las metriscas escenciales todos sus alumnos
+    y la actualización informacion de alumnos (UI -> Tabla)
+ 		** Ojo no confundirlo como SearchMateriales que busca todo, esto solo busca alumnos
+  -->
  <template>
   	<section class="admin-alumnos">
   		<!-- Seccion de Búsqueda -->
