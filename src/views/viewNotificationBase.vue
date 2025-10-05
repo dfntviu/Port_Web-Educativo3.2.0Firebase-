@@ -53,7 +53,7 @@
 	   /*  habilitar por testeo rapido (evitar llenado de campos)
 	      const role = ref<'alumno' || 'profesor'>('pred');
 	      const userId = ref('user_005');   incializar un valor para no rellenar campos*/
-
+  
 </script>
 
  <style scoped>

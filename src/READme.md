@@ -21,6 +21,8 @@
        - Trasladar los componentes restantes: SearchMaterials y PaginadoMaterials [listo]
        - Aniadir las validaciones de la version Prototipo [Viernes]
      -  Maquetar las vistas de NotificacionesdeProfesor.vue y la vista de Administracion de  la   clase R2; es decir la vista de AdmistraciondeProfesores.vue [listo].
+      :[Red] - En El Proyecto eperimentalFirebas realizar PullRequest, tal cual como esta en la documentación
+               GITH- INTERMEDY.. asi aislamos las validaciónes y se reajustaran(en esta versión limpia)
 
           - Comentarios
         // Aprendiendo el uso de colecciones Fisicas en el Front.End Firebase [semi-listo]
