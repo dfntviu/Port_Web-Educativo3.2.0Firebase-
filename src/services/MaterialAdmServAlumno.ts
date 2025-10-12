@@ -1,6 +1,7 @@
 import { collection, doc,docs, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
+import { getStorage, ref,uploadBytes, getDownloadURL} from 'firebase/firestore'; /*alm archivo en firebae **/ 
 import { initializateFireabaseStg } from '@/config/initializateFirebase.js';
-  import {Material} from '@/types/interf.index.js';
+  import {Material} from '@/types/interf.index.js';  //script de interfaces
 
 const { db } = initializateFireabaseStg();
  /* Nuevas*/
@@ -8,7 +9,7 @@ const { db } = initializateFireabaseStg();
 
     /* El Viernes pasado*/
   export class MaterialDeployService {
-    static collectionName = 'materials';
+    static collectionName = 'materials_loaded';
 
     /* ------------------------------------------------
       Obtener los Servicios de los materiales
@@ -65,6 +66,24 @@ const { db } = initializateFireabaseStg();
           throw error;
       }
   
+    }
+     /* Guarda y unicamente eso, cualquier documento en la Firestore:Fecha de creación  [07/Oct/2025] */
+    static async saveMatererials(file_material: string){
+        try{
+             // P1 Obt. la instancia de Firebase Storage
+            const storage = getStorage();   
+            // P2: Crear la referencia del archivo
+            const filreRef = ref(storage,`file_dir/${file_material.name}`);
+                // P3: Subir el archivo
+            const snapshot = await uploadBytes(filreRef,file_material);
+            // P4: Obtener la URL de descarga
+            const fileURL =   getDownloadURL(snapshot.ref)  //ref es prop. del snaphot
+              // 4.1 devolver la URL
+              return fileURL;
+        }catch(error){
+          console.error("Error al subir el archivo:", error);
+            throw error;
+        }
     }
 
     static async deleteMaterialsEduc(material: string ){

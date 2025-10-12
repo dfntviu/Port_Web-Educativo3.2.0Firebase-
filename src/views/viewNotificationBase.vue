@@ -26,7 +26,7 @@
 	import {useAuthStore} from '@/stores/authStore';
 	import {useNotificationStore} from '@/stores/useNotificationStore.ts';
 	// librerias propias
-	import {CategoriesNotifications} from '@/components/CategoriesNotifications.vue';
+	import {CategoriesNotificationsAlumno} from '@/components/CategoriesNotificationsAlumno.vue';
 	import {CategoriesNotificationProffesor} from '@/components/CategoriesNotifications.vue';
 	import {LectureNotificationsAlumno} from '@/components/LectureNotificationsAlumno.vue';
 	import {LectureNotificationsProfessor} from '@/components/LectureNotificationsProfessor.vue';
@@ -40,15 +40,15 @@
 	const userId = authStore.user?.uid ?? '';
 	   
 	 /* Inincializarlo en la vista Principal*/
-    onMounted(async ()=> {
-       if(role && userId){
-	     try{	
-			 await store_base.fetchNotificationByRole(role,userId);
-	     } catch(error){ // Informamos en devtools
+   onMounted(async ()=> {
+      if(role && userId){
+	      try{	
+			  await store_base.fetchNotificationByRole(role,userId);
+	      } catch(error){ // Informamos en devtools
 				console.error("Error al cargar las notificaciónes, segun el tipo de Rol: ",error);
-	     }
-       } //#end_if 
-    });
+	      }
+      } //#end_if 
+   });
 
 	   /*  habilitar por testeo rapido (evitar llenado de campos)
 	      const role = ref<'alumno' || 'profesor'>('pred');

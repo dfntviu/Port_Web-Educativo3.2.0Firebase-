@@ -1,41 +1,41 @@
-/**
+   /**
    *  @file validationsNotifications.ts (Notificationes de validationes)
    *  @descripcion Se encuentran las validaciones necesarias para notificaiones y roles
-  **/
+   **/
 
-  /*Tipos de roles aceptables en este script de validacion
+    /** Tipos de roles aceptables en este script de validacion
     Alumno o Profesor **/
-   export type Role  = 'alumno' | 'profesor';
+    export type Role  = 'alumno' | 'profesor';
+ 
+        const notificationsValidations = {
+              /**Valida que el UID vacio y contenga la longintud minima
 
-       const notificationsValidations = {
-              /**Valida que el UID vac├¡o y contenga la longi minima
-
-                * @param {string} uid
+                * @param   {string} uid
                 * @returns {boolean} Verdadero si es valido
 
               **/
-              validarUID(uid: string): boolean {
+            validarUID(uid: string): boolean {
                    return  uid.trim().length > 0;
-              }
+            }
 
               /**
                * Valida que el rol sea valido
                * @param{Role} uid
                *   @returns True si es alumno o profesor
                * */
-              validarRole(role: any): boolean{
+            validarRole(role: any): boolean{
                      return role === 'alumno' || role === 'profesor';
-              }
+            }
               /**
                * Valida que el rol sea valido
-               * @param{string} msg
+               * @param {string} msg
                * @param {number} minLenght
                * @returns {boolean}
                * */   
-              validarMensaje(msg: string, minLenght: number=3): boolean{
+            validarMensaje(msg: string, minLenght: number=3): boolean{
                  let lengthLong = !!msg && msg.trim().length >= minLenght
                       return lengthLong;
-              }
+            }
 
               /**
                * Validar que el timestamp exista y sea un objeto Date valido
@@ -43,42 +43,42 @@
                * @returns {boolean}
                *
                */
-              validarTimeStamp(timestamp: any): boolean {
-                        if(!timestamp) return false;
-                          const fecha = timestamp instanceOf Date ? timestamp: timestamp.toDate?.();
-                             let instanciar_time = fecha instanceof Date;
-                             let      condition2 =  isNaN(fecha.getTime());
-                             return instanciar_time && condition2;
-              }
+            validarTimeStamp(timestamp: any): boolean {
+                    if(!timestamp) return false;
+                        const fecha = timestamp instanceOf Date ? timestamp: timestamp.toDate?.();
+                            let instanciar_time = fecha instanceof Date;
+                            let      condition2 =  isNaN(fecha.getTime());
+                              return instanciar_time && condition2;
+            }
 
               /**
                * Valida el motivo o rechazo de la aportacion(material)
                * @param {string} motivo
                * @returns boolean
                * */
-                 validarMotivo(motivo: string): boolean {
+                validarMotivo(motivo: string): boolean {
                         return !!motivo && motivo.trim().length >=5;
-                 }
+                }
                      /**
-               * Valida asincron├¡a: que la fecha no sea futura
+               * Valida asincronia: que la fecha no sea futura
                * @param{Date} uid
                * @returns True si es alumno o profesor
                * */
-              validarAsincronia(fecha: Date): boolean {
-                   let Hoy = new Date.getTime();
-                        return fecha.getTime() <= Hoy;
-              }
+            validarAsincronia(fecha: Date): boolean {
+                let Hoy = new Date.getTime();
+                    return fecha.getTime() <= Hoy;
+            }
 
-              /**                                             
+            /**                                             
                 * Valida el Id del Material Educativo         
                 * @param{Role} materialId                     
                 * @returns {boolean}                          
                 * */                                          
-              validarMaterialId(materialId: string): boolean {
+            validarMaterialId(materialId: string): boolean {
                   // exp regular                              
-                   const regex = /[^A-Za-z0-9-_]{6,}$/;       
-                    return regex.test(materialId);            
-              }                                               
+                const regex = /[^A-Za-z0-9-_]{6,}$/;       
+                  return regex.test(materialId);            
+            }                                               
                                                 
               /** methoAny(parameter: string): type_data{       
                      corresphonding Logic                         
@@ -89,16 +89,16 @@
                  const fechaSigMes = pa1.timestamp * Date
                    return fechaSigMes
               }*/
-       }
+        }
 
 
-       // Erorres en las notificaciones o Notificaci├│nes Criticas                
+       // Erorres en las notificaciones o Notificaciones Criticas                
           /**                                                                     
-            * Helpers para prevenir errores antes de llamar a funci├│nes cr├¡ticas 
+            * Helpers para prevenir errores antes de llamar a funciones criticas 
           */ 
 
-   const notiticationHelpers = {
-         /**
+    const notiticationHelpers = {
+        /**
         * Valida que el rol y el uid sean correctos antes de iniciar el listener o escucha
         * de notificaciones
         * @param {Role,uid} (escucha notificaciones, identificadro requerido por el rol)
@@ -113,12 +113,12 @@
                  }
         }         
 
-         /**
-         * @prop Valida que los datos sean correctos antes de marcar un notificaci├│n como le├¡da
+        /**
+         * @prop Valida que los datos sean correctos antes de marcar un notificacion como leida
          * @params {notifyId^uid } = (Identificador unico de la notificacion^ UID del alumno[obligatorio])
-         * @returns  No regresa nada si se cumplen las condiciones*/
+         * @returns  No regresa nada si se cumplen las condiciones **/
 
-       validarAntesMarcarLeido(role: Role,notifyId: string, uid?: string ){               
+        validarAntesMarcarLeido(role: Role,notifyId: string, uid?: string ){               
               if(notificationsValidations.validarRole(role))                             
                  throw new Error('El rol no es valido');                           
               if(!notificationsValidations.validarUID(uid || '')  && role === 'alumno'){ 
@@ -127,7 +127,7 @@
               if(!notificationsValidations.validarMaterialId(notifyId)){                     
                  throw new Error('ID de notificaci├│n invalido');                           
               }                                                                              
-       } 
+        } 
 
        /**
          * @prop Valida todos los parametros necesarios antes de enviar la notificacion, incluyendo rol del emisor,
@@ -135,7 +135,7 @@
          * @params {uidList msge} = (lista UIDs de los destinatarios contenido del msga enviar)
          * @returns  No regresa nada si se cumplen las condiciones **/
 
-       validarAntesDeEnviar(role: Role, uidList:string[], msge: string){
+        validarAntesDeEnviar(role: Role, uidList:string[], msge: string){
             if(notificationsValidations.validarRole(role)){
                 throw new Error('Rol invalido');
             }
@@ -151,10 +151,10 @@
             if(!notificationsValidations.validarMensaje(msge)){
                 throw new Error('El mensaje es invalido o esta incompleto');
             }
-       }
-   };
+        }
+    };
 
-   export {notificationsValidations, notiticationHelpers};
+    export {notificationsValidations, notiticationHelpers};
             /* 
               validarMaterialParaModeracion(materalId: string,alumnoId:string,profesorId:string, motivo?:string){
                     if(!notificationsValidations.validarMaterialId(materalId)){

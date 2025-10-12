@@ -1,5 +1,5 @@
- import defineStore from '´pinia';
- import MaterialDeployService from '@/services/MaterialServ.js' ;
+ import {defineStore} from 'pinia';
+ import { MaterialDeployService } from '@/services/MaterialServ.js' ;
   import type {Material} from '@/types';
         // Darle una pasada al DeployService y la vista  viewMaterials_MatStore -> viewMethodsMaterials, abrir vista en siguiente de unitled
     const useMaterialStore = defineStore('material', {
@@ -9,6 +9,7 @@
          error: "",
    	   	 errorHistory: [] as string, // 📌historial de errores
    	   	 id: "" as string | null,
+          alumno: null as any; // nuevo for fetch
    	   	});
 
    	    actions: {
@@ -57,7 +58,8 @@
        	   	 	   	 this.loading = false;
        	   	 	   }
        	   	},
-       	   	async guardarMateriales(material: Material) {
+       	   	/*Metodo creado el [07/Oct/2025]*/
+            async guardarMaterialesYActualizar(material: Material) {
        	   	 	this.loading = true;
               this.cleanError();
        	   	 	  try{
@@ -73,6 +75,24 @@
        	   	 	   	 this.loading = false;
        	   	 	  }
        	   	},
+
+            async guardarMateriales(material: Material) {
+              this.loading = true;
+              this.cleanError();
+                try{
+                   const resultado = await MaterialDeployService.saveMatererials(material);
+                    if(resultado){
+                      console.log('Se guardado del material fue exitoso');
+                    }else {
+                      console.log('No se guardó el material. Verifica la seleccion.');
+                      }
+                }catch(err: any){
+                    this.setError(err.message)
+                }finally{
+                   this.loading = false;
+                }
+            },
+
        	   	async obtenerMaterialPorId(id: string) {
                 this.loading = true;
                 this.cleanError();
@@ -86,6 +106,37 @@
                    this.loading = false;
                 }
        	   	},
+            /**
+             * Habilitar unicamente, si se desea refactorizar la vista, 
+             * activa el compentario compuesto de la ln. 84  Fecha: [08/Oct/2025]
+             * Traer materiales de Forma individual(por alumno) **/
+            /*async fetchMaterialesPorAlumno(uid: string){
+               this.loading = true;
+               this.error = null;
+               const auth_store = useAuthStore();
+               const profile_store = useAuthStore();
+
+                try{
+                  if (!auth_store.uid || auth_store!== uid) {
+                   throw new Error('El usuario autenticado no coincide con el material solicitado');
+                  }
+
+                 const materiales = await MaterialDeployService.obtenerMaterialPorId(uid);
+                  if (!materiales || materiales.length === 0) {
+                     throw new Error('No existen materiales subidos en la sesión');
+                  }
+
+                        const perfil = await profile_store.fetchProfileUno(uid);
+
+                      this.materials = materiales;
+                         this.alumno = perfil;
+                }catch(error: any){
+                  this.error = error.message || 'El Perfil es desconocido al cargar materiales.';
+                  console.error('Traza de Error: [',this.error,']');
+                }finally{
+                   this.loading = false;
+                }
+              }, */
 
     	   	async eliminarLosMateriales(id: string) {
               this.loading = true;

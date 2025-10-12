@@ -16,11 +16,12 @@ export const materialValidationsNotify = {
                 if(!notificationsValidations.validarUID(alumnoId)){
                         throw new Error('LO SENTIMOS: El ID el ALUMNO es inv├ílido');
                 }
-                if(!notificationsValidations.validarUID(alumnoId)){
+                if(!notificationsValidations.validarUID(profesorId)){
                  throw new Error('LO SENTIMOS: El UuID del PROFESOR es inv├ílido');
                 }   // es opcional
-                 if(notificationsValidations.validarMotivo(motivo)){
+                
+                if(notificationsValidations.validarMotivo(motivo)){
                         throw new Error('ERROR: El motivo de rechazo de aprobaci├│n del Material-Educ es invalido');
-                 }
+                }
         }
 }

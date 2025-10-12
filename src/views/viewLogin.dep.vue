@@ -59,10 +59,10 @@
 	const profileState = useProfilesStore();
 
 	// Formulario de inicio de sesion
-	 const form_home = reactive({
+	const form_home = reactive({
 	 	email: 'correo@dominio.com';
 	 	contrasenia: '';
-	 });
+	});
 
 	 /*Estado Local e Int. de Usuario*/
 	 const loading = ref(false);

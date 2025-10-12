@@ -1,12 +1,12 @@
-import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import {updatePassword,reuthenticateWihCredential,EmailAuthProvider} from 'firebase/firesbase';
 import { initializateFireabaseStg } from '@/config/initializateFirebase.js';
  import {SearchMaterial} from '@/components/SearchMaterials.vue';/*Nuevo metodo de componente de Busqueda*/
 import  {AuthService} from '@/services/AuthService.ts'; /*servicios  p/cargar el perfil del usuario */
-import  {ProfileTeachersService} from '@/services/ProfileTeachersServ.ts';
+import { getAuth, signWithPopUp, FacebookAuthProvider} from  'firebase/auth'; //libreria para FB
+import  {ProfileTeachersService} from '@/services/ProfileTeacherServ.ts';
 /* End_servs loadUser*/
  import type Profile from '@/types/interf.index.ts'
-
 
 const { db } = initializateFireabaseStg();
 
@@ -29,22 +29,22 @@ export class ProfileStudentService {
                                      carrera: string, curso?: string, edad: number}) {
     try {
       const docRef = student.id ? doc(db, this.collectionName, student.id) : doc(collection(db, this.collectionName));
-      const data = {
-        nombre: student.nombre,
-        apellido: student.apellido
-        email: student.email,
-        carrera: student.carrera,
-        curso: student.curso || '',
-        fechaActualizacion: new Date(),
-        edad: student.edad,
-      };
-      await setDoc(docRef, data, { merge: true });
-      return { id: docRef.id, ...data };
-    } catch (error) {
-      console.error('[ProfileStudentService]: Error al guardar perfil de alumno', error);
-      throw error;
-    }
-   } 
+        const data = {
+          nombre: student.nombre,
+          apellido: student.apellido
+          email: student.email,
+          carrera: student.carrera,
+          curso: student.curso || '',
+          fechaActualizacion: new Date(),
+          edad: student.edad,
+        };
+       await setDoc(docRef, data, { merge: true });
+         return { id: docRef.id, ...data };
+      } catch (error) {
+         console.error('[ProfileStudentService]: Error al guardar perfil de alumno', error);
+        throw error;
+      }
+  } 
 
   /*------------------------------------------------
       Editar el Perfil del Alumno
@@ -60,6 +60,44 @@ export class ProfileStudentService {
     }
   }
 
+  static async mostrarCambiosAplicados(id: string, data: Materiales<Profile>): Promise<void>{
+    try{ 
+          // se actualiza la data de la base
+         const changes = await updateStudentProfile(id,data); 
+           // Se obtiene el perfil actualizado
+          const update_Profile = await this.getStudentById(id,role);
+         
+         // si reflejamos los cambios en el objeto: se efectua la destructuracion 
+          const changes = {...data, ...update_Profile};
+
+          return changes;
+    }catch(error){
+        console.error('actualizacion no aplicada', error);
+         throw error;
+    }
+  }
+
+  /*---------------------------------------
+      [Nuevo] Eliminar el Pefil (2025/10/11)
+    ---------------------------------------*/
+  static async getDeleteById(id: string,role:'alumno'){
+    try{
+         const docRef = doc(db, this.collectionName, id);
+         // Obt. el perfil
+      const docSnapDel = await getDoc(docRef);
+
+        if (docSnapDel.exists()) {
+          // Se elimino si existe
+                await deleteDoc(docRef)
+          return true;  // se elimino el documento
+        }else{
+          return false; // se elimino no existe
+        }
+    }catch(error){
+      console.error('Perfil del ID: ',id, 'no fue Encontrado');
+       throw error; //Lanzar error a nivel firebase
+    }
+  }
   /*------------------------------------------------
       Mostrar el Perfil del Alumno
     ------------------------------------------------
@@ -77,9 +115,40 @@ export class ProfileStudentService {
           throw error;
      }
   }
-  /*Nuevo metodo para conseguir info basica por correo*/
-  static getDataPorCorreo(correo:strin) {
-    // logica del metodo, buscar en la (version de prototipo)
+  /* Login con Facebook e insersion automatica del perfil del Alumno*/
+  static signInAndSaveFBStudent() {
+    const auth = getAuth();
+    const provider_fb = new FacebookAuthProvider();
+
+     try{
+        const result = await signWithPopUp(auth,provider_fb);
+        const user = result.user;
+
+        /*generar usuario unico*/
+        const name_usr =
+          user.displayNamr?.toLowerCase().replace(/\s+/g, "_") || 
+           user.email?.split("@")[0] ||
+         `usuario_${Date.now()}`;
+
+          const student_data = {
+            uid: user.uuid,
+            nombre: user.displayName?.split(" ")[0] || 'Sin nombre',
+            apellido: user.displayName?.split(" ")[1] || "",
+            email: user.email,
+            name_usr,
+            role: "alumno",
+          };
+
+          /*Guarda o actualiza información de Facebook en la Firestore*/
+               const docRef = doc(db,this.collectionNameR2,user.uid);
+               await setDoc(docRef,student_data,{merge: true});  //comprob de inf
+                /*Advertimos al Sistema, la info Alumno se guardo **/
+              console.log('[Servicio-Estudiante]El perfil del Alumno fue guardado exitosamente');
+               return student_data;
+     }catch(error){
+         console.error('[Servicio-Estudiante]: Error en el Registro vía Facebook', error);
+       throw error;
+     }
   }
 
   /** Metodo Lógico_4 -> (29/09/2025)

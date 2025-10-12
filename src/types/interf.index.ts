@@ -5,16 +5,16 @@
   	 autor: Profile;  //autor que subió el material
   }
     /*26/10/25*/
-   interface MaterialRenovado {
-     uid: string;    
-     titulo: string;  
-     // news
-     description?: string;   
-     archivoURL?: string | null;
-     fechaOrigen?: Date| null
+    interface MaterialRenovado {
+      uid: string;    
+      titulo: string;  
+      // news
+      description?: string;   
+      archivoURL?: string | null;
+      fechaOrigen?: Date| null
       // end_news
-     autor: Profile;  
-  }
+      autor: Profile;  
+    }
   
   interface User {
   	 uid: string;
@@ -38,12 +38,12 @@
   	 read: boolean;
   }
     // Relación entre el Alumno y un material (aprobación, moderación, etc.)
-   interface Moderation {
-     id_material: string; //id del material relacionado
-     id_autor: string;   //id del autor(perfil del Alumno)
-     snapshot:  'adm_materials' | 'alumno';  // estado/origen de la relación
-     fecha: Date| number  // fecha de moderación o tiemstamp
-     criterio: boolean;   // true = aprobado, false = rechazado
+  interface Moderation {
+    id_material: string; //id del material relacionado
+    id_autor: string;   //id del autor(perfil del Alumno)
+    snapshot:  'adm_materials' | 'alumno';  // estado/origen de la relación
+    fecha: Date| number  // fecha de moderación o tiemstamp
+    criterio: boolean;   // true = aprobado, false = rechazado
         //correction-2 en Fecha
        // snapshot:  'adm_materials' | User.value='alumno';
   }
@@ -51,8 +51,8 @@
   interface Comentario {
     id: string;
     mensaje: string;
-     destacado: boolean;
-     fecha: Date;
+    destacado: boolean;
+    fecha: Date;
   }
 
    interface Permissions {

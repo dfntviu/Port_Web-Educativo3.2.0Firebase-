@@ -3,25 +3,25 @@
 
  const BLOCK_SIZE = 1024;  //en 1 byte=1024bits
 
-  const interface Bloque{
-  	 bloque: number;
-  	 offsetInicio: number;
-  	 offsetFinal: number;
-  	 tamanio: number;
-  	 checksum: string;
-  	 data: Buffer;
-  }
+    const interface Bloque {
+  	  bloque: number;
+  	  offsetInicio: number;
+  	  offsetFinal: number;
+  	  tamanio: number;
+  	  checksum: string;
+  	  data: Buffer;
+    }
 
-  function calculaCheckSum(data: Buffer): string {
-  	// body...
-  	return crypto.createHash('sha256').update(data).digest('hex');
-  }
+    function calculaCheckSum(data: Buffer): string {
+  	   // body...
+  	  return crypto.createHash('sha256').update(data).digest('hex');
+    }
 
- export function fragmentarArchivo(pathFile: string): Bloque[] {
+    export function fragmentarArchivo(pathFile: string): Bloque[] {
  	// body...
- 	if (fs.existsSync(pathFile)) {
- 		throw new Error(`Archivo no encontrado: ${pathFile}`);
- 	}
+     	if (fs.existsSync(pathFile)) {
+     		throw new Error(`Archivo no encontrado: ${pathFile}`);
+     	}
 
  	 const stats = fs.statSync(pathFile);
  	 const fileTamanio = stats.size;
@@ -61,4 +61,4 @@
  	 		// el archivo se cierra
  	 	fs.closeSync(file)  	
  	 		return bloques;
- }
+    }

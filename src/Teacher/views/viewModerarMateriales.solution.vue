@@ -51,8 +51,8 @@
 </template>
 
 <script setup> 
-   import  {ref} from 'vue';
-   import  { useModerationStore} from '@/stores/moderateStore.ts';
+   import  { ref } from 'vue';
+   import  { useModerationStore } from '@/stores/moderateStore.ts';
 
 	  const store_moderate = useModerationStore();
 	  const modoModeracion = ref("all_mats");
@@ -74,7 +74,7 @@
 	      * ****  **** **** **** **** **** */
 
 	      // Determinar listado de aquellos Materiales pertencientes a la 1° Clasificación
-	  	  async function listadoMtAprobados() {
+	  	async function listadoMtAprobados() {
  	   		  modoModeracion.value =  'mats_aprobados'  //UI
  	   		  tipo_respuesta.value = 'aprobado';  //de mas
 	        try{
@@ -83,10 +83,9 @@
 	        }catch(e){
 	           console.error('Error en Materiales Aprobados',e);
 	        }
-
     	}
     		// Determinar listado de aquellos Materiales pertencientes a la 2° Clasificación
-    	 async function listadoMtRechazados() {
+    	async function listadoMtRechazados() {
  	   		  modoModeracion.value =  'mats_rechazados';
  	   		  tipo_respuesta.value = 'rechazado';
     	 	// modoModeracion.value = tipo_respuesta: 'rechazado'
@@ -99,7 +98,7 @@
 
     	}
     	// Determinar listado de aquellos Materiales pertencientes a la 3era Clasificación
-    	 async function listadoTodosMateriales() {
+    	async function listadoTodosMateriales() {
  	   		  modoModeracion.value = 'all_mats';
 	        try{
 	        	  await store_moderate.estadosDeModeracionPendientes();
@@ -162,13 +161,13 @@
 	 	 transition: border-color 0.2s;
 	 }
 
-	 .status_moderate input: focus,
-	 .status_moderate textarea: focus{
-	 	 border-color: #2196F3;
-	 	 outline: none;
-	 }
+	  .status_moderate input: focus,
+	  .status_moderate textarea: focus{
+	 	  border-color: #2196F3;
+	 	  outline: none;
+	  }
 
-	 .status_moderate button {
+	  .status_moderate button {
 	  	padding: 0.5rem 1rem;
 	  	font-size: 0.95rem;
 	  	border: none;
@@ -176,32 +175,32 @@
 	  	cursor: pointer;
 	  	color: #fff;
 	  	transition: background 0.2s;
-	}
+	  }
      
-     .mats_aprobados button{
-     	background-color: #4CAF50;
-     }
+      .mats_aprobados button{
+     	 background-color: #4CAF50;
+      }
 	  
 	    .mats_aprobados button:hover {
 	     background-color: #43a047;
 	    }
 
 
-     .mats_rechazados button{
+      .mats_rechazados button{
      	 background-color: #4CAF50;
       }
 
-     .mats_rechazados button:hover {
+      .mats_rechazados button:hover {
  		   background-color: #e53935;
 	    }
 
-     .alls_mats button{
+      .alls_mats button{
      	 background-color: #2196F3;
       }
 
-     .all_mats button:hover {
-  		background-color: #1e88e5;
-	}
+      .all_mats button:hover {
+  		 background-color: #1e88e5;
+	    }
 
 	 status_moderate input::placeholder,
 	 status_moderate textarea::placeholder {

@@ -1,5 +1,5 @@
 	import { ProfileStudentService } from '@/Services/ProfileStudentServ.ts';
-	import { MaterialsDeployService } from '@/Services/MaterialServ.ts';
+	import { MaterialsDeployService } from '@/Services/MaterialAdmServAlumno.ts';  
 	 import type Profile from '@/types/interf.index.ts';
 	 /*El Viernes pasado*/
   export class adminAllServices {

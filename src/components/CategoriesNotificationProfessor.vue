@@ -96,7 +96,6 @@
 	   onMounted(()=>{
 	   	 store_profesor.consummerNotifications();
 	   });	
-
 	 
 	   const unreadNotifications = computed(()=>{
 	   		 store_profesor.filter((n) => !n.read);

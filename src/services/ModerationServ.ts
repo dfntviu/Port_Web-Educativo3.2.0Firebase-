@@ -1,6 +1,6 @@
 
 import { collection, doc, getDocs, query, where, updateDoc } from 'firebase/firestore';
-import { NotificationsService } from '@/Services/NotificationServ.ts';
+import { NotificationsService } from '@/Services/NotificationsServ.ts';
 import { initializateFireabaseStg } from '@/config/initializateFirebase.js';
 
  const { db } = initializateFireabaseStg();

@@ -1,8 +1,8 @@
- import {getDocs, collection, query, where} from 'firebase/firestore'
- import {db} from '@/firebase';
+  import {getDocs, collection, query, where} from 'firebase/firestore'
+  import {db} from '@/firebase';
 
 
-    export const isDuplicatedEmail= async (correo, excludeUid=null){
+    export const isDuplicatedEmail = async (correo, excludeUid=null){
             const q = query(
                         collection(db, 'form_register_profesores'),
                          where('correo' '===' , correo.toLowerCase())

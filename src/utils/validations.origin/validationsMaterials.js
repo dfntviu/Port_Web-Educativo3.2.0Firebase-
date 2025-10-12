@@ -68,7 +68,8 @@
                 }                        
             }
         };
-            /* Deberan ir en otra constante, por su naturaleza de disenio*/
+            
+             /** Deberan ir en otra constante, por su naturaleza de disenio **/
             const validateMaterialActual = {
                 isTitleValid(titulo){
                     return titulo.trim().length > = 3;
@@ -103,7 +104,7 @@
                         return false;
                       }
                       return true;
-                   }
+                }
             },
         // };                                                        
     export {materialesValidations, validateMaterialActual, stateOfMaterial};

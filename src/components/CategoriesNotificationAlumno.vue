@@ -35,7 +35,7 @@
 <script setup  lang="ts">
 	import {ref, computed, watch} from 'vue';
 	import  {useNotificationStore} from '@/stores/notificationStore';
-	import {LectureNotifications} from '@/components/LectureNotifications.vue';
+	import {LectureNotificationsAlumno} from '@/components/LectureNotificationsAlumno.vue';
 	import {useRouter,useRoute} from 'vue-router';
 
 	const storeNotify = useNotificationStore();

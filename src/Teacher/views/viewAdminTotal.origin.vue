@@ -1,6 +1,7 @@
  <template>
   	<section class="admin-alumnos">
   		<!-- Tabla de Alumnos -->
+  		<h2>Administrador de Registro de Materiales</h2>
   		<table class="table_alumnos">
   			<thead>
   				<tr>Nombre</tr>
@@ -31,7 +32,7 @@
  
  <script setup>
  	import {ref, onMounted} from 'vue';
- 	 import {useAdmAllStore} from 'stores/allAdmStore.ts';
+ 	import {useAdmAllStore} from '@/stores/allAdmStore.ts';
 
  	 	const storeAll = useAdmAllStore();
 
@@ -39,7 +40,7 @@
  	    const dato_total = ref(0);
 
  	    /*Obtener el total de Alumnos Registrados*/
- 	  async	function todosAlumnosRegistradosFormTabla() {
+ 	async function todosAlumnosRegistradosFormTabla() {
  	  	 try{
  	  	 	todos_alumnos.value = await storeAll.monitoringTotal();
  	  	 	console.log("Alumnos cargados: ", todos_alumnos.value);
@@ -47,22 +48,22 @@
  	  	 	console.error("Error al cargar a los Alumnos",merr);
  	  	 }
 
- 	  }
+ 	}
 
  	  /*Obtener el Total de alumnos*/
- 	  async	function datoDeRegistros() {
+ 	async function datoDeRegistros() {
  	  	try{
  	  		dato_total.value = await storeAll.cuantificateTotal();
  	  		console.log(`Total de Alumnos: ${dato_total.value}`);
- 	  	 } catch(err) {
+ 	  	}catch(err){
  	  	 	console.error("Error al contar el TOTAL Alumnos",err);
- 	  	 }
- 	  }
+ 	  	}
+ 	}
  	  /*Traer de forma autonoma los metodos correspondientes a la estadisitica minima de los alumnos*/
- 	  onMounted(()=>{
- 	  	todosAlumnosRegistradosFormTabla();
- 	  	datoDeRegistros();
- 	  })
+ 	    onMounted(()=>{
+ 	  	  todosAlumnosRegistradosFormTabla();
+ 	  	  datoDeRegistros();
+ 	    });
  </script>
   <!-- Embellecer la Vista(Estilizar && Animar) -->
 

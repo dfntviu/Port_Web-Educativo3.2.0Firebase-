@@ -19,14 +19,14 @@
 	 const modoModeration = ref("all_mats");
 	 /*A corregir y entender la relacion que juega desde la 19*/
 	 // en donde se ocupa?
-	 const form_send = ref({
+	const form_send = ref({
 	 	uid_alumno: ''
 	 	lname: '';
 	 	titulo: '';
 	 	contenido: '';
 	 	fecha_actual: '';
 	 	uid_material: '';
-	 });
+	});
 	 	// ? que se hace con las variables
 	 const tipo_respuesta = ref();
 	 const alls = ref([]);

@@ -90,18 +90,18 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
-import { useMaterialStore } from "@/Stores/useMaterialStore";
+ import { reactive, onMounted } from "vue";
+ import { useMaterialStore } from "@/stores/materialStore.ts";
  import type {Material} from '@/types';
 
- const materialStore = useMaterialStore();
+   const materialStore = useMaterialStore();
 
-   const form = reactive({
+  const form = reactive({
      id: ""
      titulo: ""
      desciption: ""
      archivoURL: "",
-   });
+  });
 
     onMounted(async ()=>{
        await materialStore.fetchMaterials();  //cargar la lista inicial
@@ -122,16 +122,16 @@ import { useMaterialStore } from "@/Stores/useMaterialStore";
       await materialStore.obtenerMaterialPorId(id);
     }
 
-     async function eliminarElMaterial(Material) {
+    async function eliminarElMaterial(Material) {
       const material = Material;
       await materialStore.eliminarLosMateriales(material);
     }
 
       function resetForm() {
-       form.id =  "";
-       form.titulo: = "";
-       form.desciption = "";
-       form.archivoURL =  "";
+        form.id =  "";
+        form.titulo: = "";
+        form.desciption = "";
+        form.archivoURL =  "";
       }
     
 </script>

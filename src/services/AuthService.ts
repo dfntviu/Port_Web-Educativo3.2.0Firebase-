@@ -3,8 +3,8 @@
  * @decription Servicio de autentificación: Inicio, cierre y obtención del usuario actual
  *  **/
 
-   import {ProfileStudentService} from  '@/services/ProfileTeacherServ.ts';
-   import {ProfileTeachersService} from '@/services/ProfileStudentServ.ts';
+   import {ProfileStudentService} from  '@/services/ProfileStudentServ.ts';
+   import {ProfileTeachersService} from '@/services/ProfileTeacherServ.ts';
     import { signOut, signWithEmailAndPassword, getAuth} from "firebase/auth";
     import {User} from '@/types/interf.index.js';
 

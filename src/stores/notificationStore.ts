@@ -1,6 +1,6 @@
-  import defineStore from 'pinia';
-  import NotificationService from '@/services/NotificationsServ.ts'
-  import NotificationServiceProffesor from '@/services/NotificationServiceProffesor.ts';
+  import {defineStore} from 'pinia';
+  import {NotificationService} from '@/services/NotificationsServ.ts'
+  import {NotificationServiceProffesor} from '@/services/NotificationServiceProffesor.ts';
   import type  {Notification} from '@/types';
 
  export const useNotificationStore = defineStore('notification', {
@@ -19,23 +19,23 @@
  	 	 * Obtener las notificaciones obtenidas de un usuario.
  	 	 * */
  	 	async consummerNotifications(userId: string){
- 	 		this.loading = true;
- 	 		this.error = null;
+ 	 		 this.loading = true;
+ 	 		 this.error = null;
  	 		try{
        	   	 	this.notifications = await NotificationService.getNotifications(userId);
        	   	 	console.log(`[Estado Notificación(es): Las Notificaciónes Obtenidas (${this.notifications.length})] `)
    	 	   }catch(err: any){
    	 	   	  this.error = err.message;
    	 	   }finally{
-   	 	   	 this.loading = false;
+   	 	   	  this.loading = false;
    	 	   }
  	 	},
  	 	/**
  	 	 * Enviar notificación y refrescar la lista de estas.
  	 	 * */
  	 	async sendNotifications(userId: string, read: boolean){
- 	 		this.loading = true;
- 	 		this.error = null;
+ 	 		  this.loading = true;
+ 	 		  this.error = null;
  	 		try{ 
 				  await NotificationService.notifyAlumno(userId,msgAdv);
 				   // this.notifications = NotificationService.getNotifications(userId);
@@ -72,7 +72,7 @@
  	 	},
  	 	/*Nuevos Método: 02/19/2025*/
  	 	async editNotification(id: string, nuevoMensaje: string){
- 	 		this.loading = true;
+ 	 		 this.loading = true;
  	 		try{
  	 			await NotificationServiceProffesor.editNotification(id,nuevoMensaje);
  	 			 const notif = this.notifications.find(n => n.id ===id)
@@ -85,7 +85,7 @@
  	 	},
 
  	 	async deleteNotificacion(id: string){
- 	 		this.loading = true;
+ 	 		 this.loading = true;
  	 		try{
  	 			await NotificationServiceProffesor.deleteNotification(id,nuevoMensaje);
  	 			 const notifications = this.notifications.find(n => n.id !==id);
@@ -98,7 +98,7 @@
 
  	 	/*Nuevo metodo: Consume el servicio de Profesores y muestra sin filtrar, limpia los errores*/
  	 	async viewAllsNotifications(userId: string){	
- 	 		this.loading = true;
+ 	 		  this.loading = true;
  	 	      this.type_lecture = true | false;
  	 	     try{
  	 	     	await NotificationServiceProffesor.getNotificationsAlums(userId);
@@ -112,8 +112,8 @@
  	 	},
  	 	 /** Ulima modificación: Viernes >> 03/Oct/2025 **/
  	 	async fetchNotificationByRole(role:string,userId:string){
- 	 		this.loading = true;
- 	 		this.error = null;
+ 	 		 this.loading = true;
+ 	 		 this.error = null;
 
  	 		try{
  	 			if (role === alumno) {
@@ -143,4 +143,4 @@
  	 setLectureState(value: boolean){
  	 	this.type_lecture = value;
  	 },
- })
+ });

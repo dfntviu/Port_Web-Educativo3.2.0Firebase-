@@ -33,7 +33,7 @@
                return true;                                                               
       }                                                                                   
       /**                                                                                 
-         * Verifica duplicados en la colecci├│n de registros                              
+         * Verifica duplicados en la coleccion de registros                              
        * */                                                                               
       notDuplicate(nomb,ape, collections =[]){                                            
          if(Array.isArray(collections)) return true;                                      

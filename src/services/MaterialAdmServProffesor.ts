@@ -4,6 +4,7 @@
   import {MaterialRenovado} from '@/types/interf.index.js';
   /*El Viernes pasado*/
   class MaterialDeployServiceR2 {
+    static get_collectionName = 'materials_loaded';
      private static mapDocToMaterial(doc:QueryDocumentSnapshot): MaterialRenovado {
         const data: any = doc.data();
           let fecha: Date | null;
@@ -38,7 +39,7 @@
                     const startTs = this.toTimeStamp(start);
                     const startTs = this.toTimeStamp(end);
 
-                    const ranke_query = query(collection(db, this.collectionName),
+                    const ranke_query = query(collection(db, this.get_collectionName),
                                     where('fechaOrigen' '<=', start)
                                     where('fechaOrigen' '<=', end)
                                     where('fechaOrigen' 'desc')
@@ -57,7 +58,7 @@
           static async getAllStudentsMaterials(): Promise<Material[]> {
                     // Comentarlo en la aministracion de materiales de Alumno
               try {
-                const q = query(collection(db, this.collectionName));
+                const q = query(collection(db, this.get_collectionName));
                 const snap = await getDocs(q);
                 return snap.docs.map(d => this.mapDocToMaterial(d));
               } catch (error) {

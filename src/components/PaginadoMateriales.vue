@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-    import {ref, onMounted} from 'vue';
-    import {MaterialDeployService} from '@/services/MaterialDeployService.ts';
+    import  { ref, onMounted} from 'vue';
+    import  { MaterialDeployService } from '@/services/MaterialAdmServAlumno.ts';
      import { MaterialRenovado} from '@/types/interf.index.ts';
 
           const materiales = ref<MaterialRenovado[]>([]);

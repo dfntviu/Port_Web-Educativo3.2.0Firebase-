@@ -12,17 +12,18 @@
         a2) Instalar el Framework de FrontEnd Tailwind  (pendiente)      
 
           >> 04/Oct/2025 >>
-     - Jeraraquizar directorio por Rol [Sabado (aun no)]
+     - Jeraraquizar directorio por Rol [listo]
      - Crear un nuevo proyecto [Sabado (aun no)]
-       - Trasladar la Limpieza actual y unificarla con la versión del Prototipo [Lunes (Casi terminado..)]
-     - Crear colecciones restantes con respecto a las variables estaticas de cada clase. [...Domingo]
+       - Trasladar la Limpieza actual y unificarla con la versión del Prototipo(la misma informacion) [Lunes (listo)]
      - Instalar las dependencias necesarias para el flujo correcto [Sabado (aun no)]
        - Verficar la versión 2(v2) del LocalStorage, para efectuar el cambio de navegación por Rol[pendiente.]
        - Trasladar los componentes restantes: SearchMaterials y PaginadoMaterials [listo]
        - Aniadir las validaciones de la version Prototipo [Viernes]
      -  Maquetar las vistas de NotificacionesdeProfesor.vue y la vista de Administracion de  la   clase R2; es decir la vista de AdmistraciondeProfesores.vue [listo].
       :[Red] - En El Proyecto eperimentalFirebas realizar PullRequest, tal cual como esta en la documentación
-               GITH- INTERMEDY.. asi aislamos las validaciónes y se reajustaran(en esta versión limpia)
+               GITH- INTERMEDY.. asi aislamos las validaciónes y se reajustaran(listo)
 
           - Comentarios
-        // Aprendiendo el uso de colecciones Fisicas en el Front.End Firebase [semi-listo]
+        // Aprendiendo el uso de colecciones Fisicas en el Front.End Firebase [listo]
+        // Crear colecciones restantes con respecto a las variables estaticas de cada clase. [...creo que ya]
+         No es necesario al definirse, en el servicio, este las crea automaticamente

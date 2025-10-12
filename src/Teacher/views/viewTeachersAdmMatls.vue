@@ -25,8 +25,8 @@
  </template>
  
  <script setup lang="ts">
-  import {ref} from 'vue';  //bien
-  import {useMaterialStoreR2} from '@/stores/useMaterialStoreR2.ts';
+  import { ref } from 'vue';  //bien
+  import { useMaterialStoreR2 } from '@/stores/materialTeacherStore.ts';
 
  	 const materialStore2 = useMaterialStoreR2();
 
@@ -36,14 +36,14 @@
 
  	   const opciones = ref([1,2,3,4,5,6]); 
 
- 	const filtradoDeMateriales = async(opcion: number | null)=>{
+ 	  const filtradoDeMateriales = async(opcion: number | null)=>{
  			// El adicional
-  		 if (!opcion) return;
+  		if (!opcion) return;
 
         try{ 
         	await materialStore2.filtradoDeMateriales(opciones);
         }catch(err){
         	materialStore2.error = "Error al Filtrar los materiales";
         }
- 	};
+ 	  };
  </script>

@@ -4,44 +4,55 @@
 <template>
 	<div class="welcome-container">
 		<div class="fade-slide">
-			<div v-if="fullName" class="welcome-message">
-			  <h2 class="welcome-title">Bienvenido:{{full_name}}</h2>
-		        <p class="carrer-text role-text">{role} - {carrera}</p>
+			<div v-if="profile && profile.name && profile.apellido" class="welcome-message">
+			  <h2 class="welcome-title">Bienvenido:{{profile.name}} - {{profile.apellido}} </h2>
+		        <p class="carrer-text role-text">{profile.role} - {{profile.carrera}} </p>
 		</div>
 	</div>
 </template>
 
+	  <!-- // Es el Metodo-Animado-2 ya con Bak-End NoSQL incluido -->
 <script setup lang="ts">
-	  // Es el Metodo-Animado-2 ya con Bak-End NoSQL incluido
+	/* El Componente es depurado el día: 08 de Octubre del 2025 */
 	import { ref, onMounted} from 'vue';
-	import {ProfileStudentService} from '@/services/ProfileStudentServ.ts';
+	import { ProfileStudentService } from '@/services/ProfileStudentServ.ts';
 
-	const user_who = ref('');
+		const profile1 = ref({
+			name = '';
+			apellido = '';
+			carrera = '';  
+	        role = 'alumno' as 'alumno' | 'profesor'; // profesor es predeterminado
+		});
+		// Definicion de las props del componente hijo
+		const props = defineProps({
+			role: {
+				type: String,
+				requried: true,
+			},
+		});
 
-	    const name = ref('');
-	const apellido = ref('');
-   const full_name = ref('');  //var nueva, vital pues la logica principal
-	       const role = ref<'alumno' |'profesor'>('alumno'); // ('role_name') es el role predeterminado
-
-	    async function seeWelcomeTextRole(email: string, password: string){
+	    async function seeWelcomeTextRole(email: string, password: string, role: 'alumno' | 'profesor'){
 	   	    try{
-	   	    	   	 /*Se consume el servicio del metd. cargadePerfil del servicio de Estudiante*/		
-	   	    	  const profile =  ProfileStudentService.loadUserProfile(email,password);
-	   	    
-    	   		user_who.value = profile.value;
-    	   		    name.value = profile.value
-    	   		apellido.value = profile.value;
-    	   		full_name.value = profile.value;
-	   	    
-	   	    	   		console.log(`Bienvenido ${full_name}, con El Rol: ${role.value}`);
+	   	    	   	 /* Se consume el servicio para  carga el Perfil del Estudiante*/		
+	   	    	  const loaded_profile =  ProfileStudentService.loadUserProfile(email,password,role);
+	   	    	
+	   	    	// Asignar los valores del perfil cargado al objeto profile1
+	   		profile1.value = {profile.role;
+	   		    	   	 name = loaded_profile.name || '',
+	   		    	     apellido = loaded_profile.apellido || '' ,
+	   		    	   	  carrera = loaded_profile.carrera || '',
+	   		    	   	   role: loaded_profile || 'alumno'  // sino encontro el role predefinido
+	   		    	   	}
+					
+	   	    	   		console.log(`Bienvenido ${profile1.value.name}, con El Rol: ${profile1.value.role}`);
 	   	    }catch(error){
 	   	   	   console.log('Error al cargar la animación de Texto de Bienvenida',error);
 	   	    }
-	   }
+	    }
 
-	   onMounted(()=>{
-	   	  seeWelcomeTextRole('correo@ejemplo.com','54321');
-	   })
+	    onMounted(()=>{
+	   	  seeWelcomeTextRole('correo@ejemplo.com','54321', props.role );
+	    });
 
 </script>
 
