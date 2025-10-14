@@ -51,9 +51,40 @@
 						<button type="button" @click="resetTradicional" :disabled="loading">Limpiar</button>
 					</div>
 				</form>
+
+				  <!-- <form v-if="tipoRegistro === 'tradicional_profile'" class="panel panel_tradicional"
+			  	  <-- Penel: Perfil Tradicional  --
+				   @submit="handleSumbit"> 
+				      <h3>Registro Tradicional</h3>
+								<label>Nombre<input type="text"></label>
+									<label>Nombre     <input v-model="" type="text" required></label>
+									<label>Apellido   <input v-model="" type="text" required></label>
+									<label>Correo Institucional<input  v-model="" type="text" required></label>
+									<label >Contrasenia	<input v-model="" type="text" required></label>
+								<div class="academico">
+									<h1>Datos Académicos</h1>
+									 <label >Num. Cta</label>
+									 <input type="text"  v-model="">
+									 <label >Areá Académica</label>
+									 <input type="text" v-model="">
+									 <label >Rol:
+										<select >
+										 	<option value="alumno"></option>
+										 	<option value="profesor"></option>
+										</select>
+									</label>
+								</div>
+								<div class="botones">
+									<button type="button" @click="action='edit'" :disabled="loading">Editar Perfil</button>
+									<button type="button" @click="action='delete'" :disabled="loading">Eliminar Perfil</button>
+
+									<input type="submit" style="display: none;">
+								</div>
+					</form> -->
+
 				<div  v-if="tipoRegistro==='facebook'" class="panel panel-facebook">
 						<h3>Registro de Facebook</h3>
-						<p class="classs-helper">Utiliza Facebook para autenticar y posterior completa y Edita tú Perfil anges de guar</p>
+						<p class="classs-helper">Utiliza Facebook para autenticar y posterior completa y Edita tú Perfil anges de guardar</p>
 
 						<div class="fb-actions">
 							<button type="button" @click="onFacebookSignIn">Iniciar Sesión con Facebook</button>
@@ -136,6 +167,7 @@
 	import { useAuthStore } from '@/stores/authStore.ts';
 	import { useProfileStore } from '@/stores/profileStore.ts';
 	import {onFetchSocialProfile, clearSocial} from '@/composable/fetchSocialProfile';
+	  import {composableProfileStudent} from '@/composable/composableProfileStudent.js';
 
 	/*Instanciar stores*/
 	 const authStore =  useAuthStore();
@@ -298,6 +330,12 @@
 	    // Incializamos del composable (2)
 	     clearSocial();
 
+	    /*---------------- Perfil: Inicio_Tradicional mediante formulario ----------------*/
+				// Trasladar  al composable 
+	     	// Metodo para manipular la edicion y manipulacion del Perfil de Profesor
+	      composableProfileStudent();
+	       // Previamente estaba el  codigo completo
+			/*---------------- Perfil: Fin_Tradicional mediante formulario ----------------*/
 	    onMounted(()=>{
 	     	 tipoRegistro.value = 'tipo';
 	    });

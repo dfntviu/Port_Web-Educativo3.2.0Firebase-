@@ -22,12 +22,12 @@
       isValidFirestoreUser(obj){                                                          
                      if(obj || typeof obj!=== "object") return false;                     
                                                                                           
-           const requiereFields = ["uuid", "user", "correo", "nombre", "apellido", "rol"];
+           const requiereFields = ["uuid", "user", "email", "nombre", "apellido", "rol"];
             for (const field of requiereFields) {                                         
                  if (!isNonEmptyString(obj[field])) return false;                         
             }                                                                             
                                                                                           
-            if (isValidateEmail(obj.correo)) return false;                                
+            if (isValidateEmail(obj.email)) return false;                                
                if (isValidRole(obj.rol)) return false;                                    
                                                                                           
                return true;                                                               

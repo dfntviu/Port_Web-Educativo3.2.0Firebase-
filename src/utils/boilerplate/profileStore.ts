@@ -76,9 +76,12 @@
 
                 //*this->storeProf(2)
             async EditProfileAlumno(userId: string, dataPerfil: Profile){
-              try{
-                   if(this.typeUser?.role=='alumno' && typeUser.uid === userId)
+              try{  //?
+                   if(this.typeUser?.role==='alumno' && typeUser.uid === userId)
                    await ProfileStudentService.updateStudentProfile(userId,dataPerfil);
+                  if (this.typeUser?.role==='profesor' && typeUser.uid === userId) {
+                        await ProfileTeachersService.updateTeacherProfile(userId,dataPerfil);
+                  }
               }catch{
                  this.error = err.message;
               }

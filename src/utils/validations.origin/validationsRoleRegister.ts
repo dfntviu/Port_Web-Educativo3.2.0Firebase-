@@ -6,7 +6,7 @@
    * Validaciónes de registro por Rol
    *  Estructura: validationsRoleRegister = {common, teacher, student, dispatchValidation()}
    * */
-  const validationsRoleRegister = {
+  export const validationsRoleRegister = {
   	// VALIDACIONES COMUNES(AMBOS ROLES)
   	common:{
   		// Validar que el email contenga formato valido

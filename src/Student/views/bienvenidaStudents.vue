@@ -8,6 +8,7 @@
 <script setup lang="ts">
 	/*Realizado el 08 de Octubre del 2025*/
 	import { ref, onMounted} from 'vue';
+	import {searchValidations} from '@/utils/validations.origin/validationsSearch.js';
 	import { WelcomeUsers } '@/components/WelcomeUsers.vue';
 
 	// Variables de testing

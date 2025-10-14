@@ -30,6 +30,7 @@
 	import {CategoriesNotificationProffesor} from '@/components/CategoriesNotifications.vue';
 	import {LectureNotificationsAlumno} from '@/components/LectureNotificationsAlumno.vue';
 	import {LectureNotificationsProfessor} from '@/components/LectureNotificationsProfessor.vue';
+	import	{materialValidationsNotify} from '@/utils/validations.origin/validationsModerationNotifications.js'; //*
 
 	 /* Estado base -> invocacion*/
 	const  authStore = useAuthStore();

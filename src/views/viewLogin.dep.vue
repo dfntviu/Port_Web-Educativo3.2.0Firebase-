@@ -50,9 +50,10 @@
 
 <script language="ts">
 	import {ref,reactive,computed} from 'vue';
+	import   type {User} from '@/types/intef.indexs';
+	import {validationsRoleRegister} from '@/utils/validations.origin/validationsRoleRegister.ts';
 	import {useAuthStore} from '@/Stores/authStore.ts';
 	import {useProfilesStore} from '@/Stores/profilesStore.ts';
-	 import type {User} from '@/types/intef.indexs';
 
 	/*Declaracion Stores*/
 	const authStore    = useAuthStore();

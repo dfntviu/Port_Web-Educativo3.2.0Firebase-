@@ -92,6 +92,8 @@
 <script setup lang="ts">
  import { reactive, onMounted } from "vue";
  import { useMaterialStore } from "@/stores/materialStore.ts";
+ import {materialAdmValidations} from '@/utils/validations.origin/validationsAdminMaterials.js';
+ import {materialesValidations, validateMaterialActual, stateOfMaterial} from '@/utils/validationsMaterial/validationsMaterials.js';
  import type {Material} from '@/types';
 
    const materialStore = useMaterialStore();

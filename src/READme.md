@@ -8,14 +8,14 @@
      Enteder como se comunican desde fuera los servicios del Back-End de la Lógica y las colecciónes Fisicas 
      [more ]
     - Centralizar la Hoja de Estilos(CSS) en el archivo de configuración (main.css)
-        a1) Instalar el Framework de FrontEnd Bootstrap (pendiente)
+        a1) Instalar el Framework de FrontEnd Bootstrap (pendiente) → Lunes
         a2) Instalar el Framework de FrontEnd Tailwind  (pendiente)      
 
           >> 04/Oct/2025 >>
      - Jeraraquizar directorio por Rol [listo]
-     - Crear un nuevo proyecto [Sabado (aun no)]
+     - Crear un nuevo proyecto [(pendiente) → Lunes] 
        - Trasladar la Limpieza actual y unificarla con la versión del Prototipo(la misma informacion) [Lunes (listo)]
-     - Instalar las dependencias necesarias para el flujo correcto [Sabado (aun no)]
+     - Instalar las dependencias necesarias para el flujo correcto [(pendiente)→ Lunes]
        - Verficar la versión 2(v2) del LocalStorage, para efectuar el cambio de navegación por Rol[pendiente.]
        - Trasladar los componentes restantes: SearchMaterials y PaginadoMaterials [listo]
        - Aniadir las validaciones de la version Prototipo [Viernes]

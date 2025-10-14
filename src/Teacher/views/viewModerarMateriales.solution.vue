@@ -53,6 +53,7 @@
 <script setup> 
    import  { ref } from 'vue';
    import  { useModerationStore } from '@/stores/moderateStore.ts';
+   import {materialAdmValidations}  from '@/utils/validations.origin/validationsAdminMaterials.js';                         
 
 	  const store_moderate = useModerationStore();
 	  const modoModeracion = ref("all_mats");

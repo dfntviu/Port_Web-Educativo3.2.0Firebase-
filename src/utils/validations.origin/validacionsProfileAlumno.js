@@ -1,10 +1,10 @@
- const validacionesPerfilProfessor = {
+  export const validacionesPerfilAlumno = {
  	/**
  	 * validationsProfilesAlumno.js
- 	 * -------------------------------------------------------------------
- 	 *  Validaciones y controles para el perfil del Alumno.
- 	 *  Incluye politícas de Seguridad escenciales, límites y consistencia 
- 	 * -------------------------------------------------------------------
+ 	 * -----------------------------------------------------------------------
+ 	 *  Validaciones y controles para el perfil del Profesor.
+ 	 *  Incluye politícas de Seguridad escenciales, límites y control errores. 
+ 	 * -----------------------------------------------------------------------
  	 /**
  	 * Validar correo electronico.
  	 * */
@@ -19,119 +19,114 @@
 
  			  return true;
  		}catch(error){
- 			console.error("[ValidacionesdelCorreo]: ",error.message);
+ 			console.error("[ValidacionesProfesor]: ",error.message);
  			 return false;
  		}
  	},
- 	/**
- 	 * Validar la Estructura de la password(contrasena).
- 	 * */
- 	isValidPassword(pass){
- 		try{
- 			if (typeof pass !== "string") throw Error("El formato de contraseña es incorrecto");
- 			if (pass.trim().length < 6) throw Error("La contraseña dene contener al menos 6 caracteres");
- 			 const regex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
 
- 			 const valido = regex.test(pass);
- 			 if (!valido) throw Error("Deberá contener letras y números ");
- 			  return true;
+	/**
+	 * Validar el nombre del Profesor
+	 * */
+ 	isValidEmail(nombre){
+ 		try{
+ 			if (typeof pass !== "string") throw Error("El formato de Nombre no valido");
+ 			if (nombre.trim().length < 4)  throw Error("El nombre es demasido corto");
+ 			
+ 			 	const regex_nme = /^[a-zA-ZÀ-ÿ\s]+$/;
+ 			if(!regex_nme.test(nombre)){
+ 			 	throw new Error("El nombre solo debe contener Letras");
+ 			 		return true;
+ 			}
  		}catch(error){
  			console.error('[ValidacionContrasena] →',error.message);
  			 return false;
  		}
  	},
- 	/**
- 	 * Validar que las contrasenias no sean iguales.
- 	 * */
- 	isMatchingPassword(oldPass,newPass){
+
+ 	/*Verificar si el perfil del Profesor existe*/
+
+ 	isDuplicatedTeacher(email, listaProfesores){
  		try{
- 			if (!this.isValidPassword(newPass)) return false;
- 			if (oldPass === newPass) throw new Error("El formato de contraseña es incorrecto");
- 			 return true;
+ 			if (!this.isValidEmail(email)) return false;
+      		   const duplicado = listaProfesores.some((p) => p.email === email);
+     	     if (duplicado) {
+     	     	 throw new Error("Ya existe un profesor con este correo electrónico");
+     	          return true;
+     	     }
  		}catch(error){
- 			 console.error('[ValidacionContrasena] →',error.message);
- 			  return false;
+ 			console.error('[ValidacionPerfilDuplicado] →',error.message);
+ 			 return false;
  		}
  	},
- 	/**
- 	 * Verificar que su el perfil ya existe en el listado de Alumnos.
- 	 * */
- 	isDuplicateProfile(email, listaAlumnos){
- 		try{
- 			if (this.isValidEmail(email)) return false;
- 			 const duplicate = listaAlumnos.some((a) => a.email === email);
- 			if (duplicate) throw Error("Error: Ya existe un perfil con este correo electronico");
- 			  return true;
- 		}catch(error){
- 			console.warn('[ValidateDuplicated] →', error.message);
- 			  return false;
- 		}
+
+ 	/** 
+ 	 * Control de cantidad de actualizaciones (7) */
+ 	canUpdateProfile(vecesAcutalizado){
+ 	 	 try{
+ 	 	 	 const LIMITE = 7;
+ 	 	 	  if (vecesAcutalizado>= LIMITE) {
+ 	 	 	  	 throw new Error("Haza alcanzado el límite de 8 actualizaciónes del perfil");
+ 	 	 	  	 return true;
+ 	 	 	  }
+ 	 	 }catch(error){
+ 	 	 	 console.warn("[ValidacionActualizaciónProfesor] → ", error.message);
+ 	 	 	  return false;
+ 	 	 }
  	},
  	/**
- 	 * Validar cuota maxmia de alumnos a lo sumo 1300
- 	 * */
+ 	 * Validar la quota maxima de registro del Rol Profesor
+ 	 *  **/
  	checkQuotaLimit(totalActual){
- 	    try{
- 	       const LIMIT = 1300 //total Alums
- 	       if (totalActual >=  LIMIT)  throw new Error("El Limiter de Alumnos ha sido alcanzado(1300)");  
- 	         return true;
- 	    }catch(error){
- 	    		console.warn('[ValidarLimitQuote] →',error.message);
- 	    	 return false;
- 	    }
+ 		try{
+ 			const LIMIT_TEACHER = 140;
+			if (totalActual  >= LIMIT_TEACHER){
+			  	 throw new Error("El límite de profesores ha sido alcanzado(80)");
+			  		return true;
+			}
+		}catch(error){
+			console.warn('[validacionCuotaProfesor] → ', error.message);
+			 return false;
+		}
  	},
 
  	/** 
- 	 * Control de cantidad de actualizaciones del perfil(MAX. 5) 
- 	 * */
- 	couldUpdateProfile(vecesActualizado){
- 		try{
- 			const LIMIT_UP = 5;
- 			if (vecesActualizado >= LIMIT_UP) {
- 				throw new Error("Error: Haz alcanzado el límite de 5 actualizaciónes");
- 				return true;
- 			}
- 		}catch(error){
- 			 console.warn('[Validación de Actualización] → ',error.message); 
- 			  return false;
+ 	 * Validacion y manejo de error con Gmail*/
+ 	async handleGmailErrors(error){
+ 		console.error("[ErrorGmailRegistroProfesor]→ ",error );
+ 		let mensaje = "No fue posible registra tu cuenta de Estudiante mediante Gmail.";
+
+ 		if (error.code === "auth/popup-closed-by-user") {
+ 			 mensaje += "El usuario cerró la ventana antes de completare el inicio de sesión.";
+ 		}else if (error.code === 'auth/account-exists-with-different-credential') {
+ 			 mensaje+= "Este correo ya está registrado con otro método de autentificación.";
+ 		}else {
+ 			mensaje+= "Por favor, intente de nuevo mas tarde.";
  		}
+
+ 		 alert(mensaje);
+ 		return false;
  	},
 
- 	/** 
- 	 * Validacion y manenjo de erorres con FaceBook
+ 	/**
+ 	 * Validar cambio de contrasenia por antiguedad
  	 * */
- 	async handleFacebookError(){
- 		 console.error("[ErrorFBRegistro] →", error);
-    		alert("No se pudo registrar con Facebook. Por favor, intente de nuevo más tarde o revise su conexión.");
-    		return false;
- 	},
-
-
- 	/** 
- 	 * Sugerir cambios de contrasenia por antiguedad
- 	 * */
- 	sugeryforPasswordChange(fechaUltimoCambio){
- 		try{
- 			if (!(fechaUltimoCambio intanceOf Date) ) throw new Error("La Fecha no válida");
- 			const today = new Date();
- 				// Se alm la operaciones entre meses.
- 			const months = (today.getFullYear()) - (fechaUltimoCambio.getFullYear()) * 12 + 
- 			 			   (today.getMonth())    - (fechaUltimoCambio.getMonth());
-
- 			 if(months >= 6  && months <= 8){
- 			 	  const sugery =  "Sugerencia: Cambia tu contraseña para mantener segura tu cuenta";
- 			 	return sugery;
- 			 } else if (months === 9) {
- 			 	const advertence =  "Advertencia: Tú contraseña debe cambiarse pronto para evitar el cierre inesperado sesión";
- 			 	return advertence;
- 			 } else if( months>= 10){
- 			 	 throw new Error("La sesión ha sido Cerrada: El Cambio de contraeña Obligatorio");
- 			 }
-
- 			 return "";
-  		}catch(error){
-  			console.error("[ValidacionCambioPassword]", error.message);
-  			 return error.message;
-  		}
+ 	sugerirCambioPassword(fechaUltimoCambio){
+ 	  	 	try{	
+ 	  	 	 if (!(fechaUltimoCambio instanceof Date)) throw new Error('La fecha no es valida');
+ 	  	 	   const today = new Date();
+ 	  	 	    const meses = (today.getFullYear() - fechaUltimoCambio.getFullYear()) *12 +
+ 	  	 	    			  (today.getMonth() - fechaUltimoCambio.getMonth());
+ 	  	 	    if (meses >=6 meses<= 8) {
+ 	  	 	    	return "Sugerencia: Cambia tu contraseña para mantener tu cuenta segura";
+ 	  	 	    } else if(meses=== 9){
+ 	  	 	    	return "Advertencia: La contraseña debe cambiarse pronto para evitar el cierre de sesion";
+ 	  	 	    }  else if (meses>= 10) {
+ 	  	 	    	throw new Error("La sesión ha sido cerrada. El Cambio de contraseña es OBLIGATORIO.");
+ 	  	 	    }
+ 	 		    return "";
+ 	  	 	}catch(error){
+ 	  	 		console.error("[ValidaciónCambioContrasenia] →", erro.message);
+ 	  	 		 return error.message;
+ 	 	 	}
  	},
  };

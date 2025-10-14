@@ -37,6 +37,20 @@ export class ProfileTeachersService {
       throw error;
     }
   }
+
+   /*------------------------------------------------
+      Editar el Perfil del Alumno
+    ------------------------------------------------
+  */
+  static async updateTeacherProfile(id: string, data: Materiales<Profile>): Promise<void>{
+    try{
+        const ref = doc(db,this.collectionName,id);
+        await updateDoc(ref,data);
+    }catch(error){
+      console.error('[ProfileTeacherService]: Error al guardar la actualización del Profesor', error);
+        throw error;
+    }
+  }
    /** Metodos de Actualizacion & Obtencion del Perfil **/
 
     /* -------------------------------------------------------------------------------------

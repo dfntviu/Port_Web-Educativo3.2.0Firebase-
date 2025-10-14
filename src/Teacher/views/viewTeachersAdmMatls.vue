@@ -27,6 +27,7 @@
  <script setup lang="ts">
   import { ref } from 'vue';  //bien
   import { useMaterialStoreR2 } from '@/stores/materialTeacherStore.ts';
+  import {materialesValidations} from '@/utils/validations.origin/validationsMaterials.js'; //*
 
  	 const materialStore2 = useMaterialStoreR2();
 

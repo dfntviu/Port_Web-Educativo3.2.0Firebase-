@@ -11,9 +11,10 @@
 	import {useModerationStore} from '@/stores/moderateStore.ts';
 
 	/*minilibrria de componentes Base*/
-	 import {ComentariosActuales}  from '@/components/ComentariosActuales.vue';
-	 import {ComentariosDestacados} from '@/components/ComentariosDestacados.vue';
-	   import type {Material} from '@/';
+  import {ComentariosActuales}  from '@/components/ComentariosActuales.vue';
+  import {ComentariosDestacados} from '@/components/ComentariosDestacados.vue';
+  import {materialValidationsNotify} from '@/utils/validations.origin/validationsModerationNotifications.js';
+	   import type {Material} from '@/types/inter.index.ts';
 
 	 const store_moderate =  useModerationStore();
 	 const modoModeration = ref("all_mats");

@@ -31,7 +31,7 @@
  import { ref } from 'vue';
  import { useMaterialStore } from '@/stores/materialStore';
  import { useAuthStore } from '@/stores/authStore';  // verficar el inicio de sesion del usuario
-    // import {materialAdmValidations} from '@/utils/validations.origin';
+  import {materialesValidations, validateMaterialActual, stateOfMaterial} from '@/utils/validations.origin/validationsMaterials.js'; //*
     // import { storage } from '../firebase/config';
 
       /* -------------------- Stores (estados) -------------------- */

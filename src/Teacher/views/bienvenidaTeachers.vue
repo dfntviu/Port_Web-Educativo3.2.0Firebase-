@@ -7,6 +7,7 @@
  <script setup lang="ts">
  	/*Realizado el 08 de Octubre del 2025*/
  	import {ref, onMounted} from 'vue';
+ 	import {searchValidations} form '@/utils/valitations.origin/validationsSearch.js';
  	import {WelcomeUsers} from '@/components/WelcomeUsers.vue';
 
  	const email  = 'correo@profesor.instituto.mx'

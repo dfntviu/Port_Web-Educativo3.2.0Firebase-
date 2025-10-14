@@ -37,6 +37,7 @@
  	 import { useProfileStore }  from '@/stores/profileStore.ts';
  	 import { useMaterialStore}  from '@/stores/materialStore.ts';
  	 import { useAuthStore }     from '@/stores/authStore';
+ 	 import {materialsValidations} from '@/utils/validationsMaterials.js' //*
 
  	  /* Definicion de states */
  	 const storeMaterial = useMaterialStore();

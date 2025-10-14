@@ -1,4 +1,7 @@
 <template>
+	<!-- El script actual fue sustituido por el vStndRegister, la unica diferencia es que 
+	   el codigo es muy extenso y el script actual se distribuyo enn componentes se invocan
+	   y se usar por logica JS directa, y devuelve el Componente segun corrresponda  -->
 	<!-- Manipulation between of the panels -->
 		<div class="acciones">
 			<button @click="mostrarRegistro">Registro Alumno</button>
@@ -15,6 +18,7 @@
  	import {ref, computed } from 'vue';
  	import { RegisterStudentView } from '@/components/RegisterStudentView.vue';
  	import { ProfileStudentView  } from '@/components/ProfileStudentView.vue';
+ 	import {validacionesPerfilProfessor} from '@/utils/validacionsProfileTeacher.js'; //*
 
  	const current = ref('register');
  	const currentView = computed(()=>current.value === 'register' ? RegisterStudentView : ProfileStudentView)
